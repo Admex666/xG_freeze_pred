@@ -213,7 +213,8 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import mean_squared_error, r2_score
 
 # --- Adatszétválasztás ---
-X = features_df.drop(columns='xg')
+X = features_df.drop(columns=['xg', 'open_shot_length', 'avg_def_front_dist', 'avg_def_dist'] + [
+    col for col in features_df.columns if ('play_pattern' in col) or ('body_part' in col)])
 y = features_df['xg']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=state)
@@ -256,5 +257,19 @@ plt.show()
 #%% Save model
 import joblib
 
+xgb_model_all = XGBRegressor(
+    n_estimators=300,
+    learning_rate=0.05,
+    max_depth=4,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    random_state=state,
+    n_jobs=-1
+)
+
+# --- Illesztés ---
+xgb_model_all.fit(X, y)
+
 # Train után
-joblib.dump(model, 'xgboost_model.pkl')
+joblib.dump(xgb_model_all, 'xgb_model.pkl')
+joblib.dump(X.columns.tolist(), "feature_names.pkl")
