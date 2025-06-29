@@ -42,15 +42,15 @@ model = joblib.load("xgb_model.pkl")
 feature_names = joblib.load("feature_names.pkl")
 
 # Title
-st.title("xG Predictor - Euro 2024")
+st.title("xG Predictor")
 
 st.markdown("Add meg az ismert paramétereket egy lövéshez, és a modell becsli az xG-t.")
 
 # --- Input mezők ---
-x = st.slider("x koordináta (0–120)", 0.0, 120.0, 102.0)
-y = st.slider("y koordináta (0–80)", 0.0, 80.0, 40.0)
-keeper_x = st.slider("Kapus X pozíció", 0.0, 120.0, 116.0)
-keeper_y = st.slider("Kapus Y pozíció", 0.0, 80.0, 40.0)
+x = st.slider("Lövő X koordináta", 0.0, 120.0, 102.0)
+y = st.slider("Lövő Y koordináta", 0.0, 80.0, 40.0)
+keeper_x = st.slider("Kapus X koordináta", 0.0, 120.0, 116.0)
+keeper_y = st.slider("Kapus Y koordináta", 0.0, 80.0, 40.0)
 num_blockers = st.slider("Blokkoló védők száma", 0, 10, 2)
 num_players_in_box = st.slider("Boxban lévő játékosok száma", 0, 20, 6)
 num_defenders_in_box = st.slider("Boxban lévő védők száma", 0, 10, 3)
